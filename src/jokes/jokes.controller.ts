@@ -16,6 +16,11 @@ export class JokesController {
         return this.jokesService.findMany();
     }
 
+    @Get('types')
+    findTypes() {
+        return this.jokesService.findUniqueTypes();
+    }
+
     @Get(':id')
     findOne(@Param('id') id: number) {
         return this.jokesService.findOne(id);

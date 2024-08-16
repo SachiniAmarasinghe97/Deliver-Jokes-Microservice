@@ -21,7 +21,16 @@ export class JokesService {
     findOne(id:number) {
         return this.JokeRepository.findOne({where: {id}});
     }
-   
+
+    async findUniqueTypes(): Promise<string[]> {
+        const types = await this.JokeRepository
+            .createQueryBuilder('joke')
+            .select('DISTINCT joke.type', 'type')
+            .getRawMany();
+
+        return types.map(t => t.type);
+    }
+    
     async update(id:number, dto:CreateJokeDto){
         const joke = await this.JokeRepository.findOne({where: {id}});
 
